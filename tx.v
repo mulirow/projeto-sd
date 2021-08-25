@@ -1,55 +1,61 @@
 module tx(clk1, btn, data, out);
-    input clk1, btn;
+    input clk1;
+    input btn;
     input [7:0]data;
-    output reg out;
+    output out;
 
-    reg [1:0]state;
-    reg [3:0]clockCount;
+    reg [2:0]state;
     reg [3:0]bitIndex;
     reg [7:0]dataStore;
+    reg o = 1;
 
-    parameter standby = 0, startBit = 1, processBits = 2, endBit = 3;
+    parameter standby = 0, waitRelease = 1, startBit = 2, processBits = 3, endBit = 4;
 
-    always @ (*) begin
+    assign out = o; // Initialize out as 1
+
+    always @ (posedge clk1) begin
         case(state)
             // Waiting for input state
             standby: begin
-                dataStore <= data;
-                clockCount <= 0;
-
-                if(~btn) state <= startBit;
+                o <= 1;    // Output is high while idle
+                if(~btn) state <= waitRelease;
             end
 
-            //  Start bit to start getting the data bits
+            // Waiting for button release
+            waitRelease: begin
+                if(btn) begin
+                    dataStore <= data;
+                    state <= startBit;
+                end
+            end
+
+            // Start bit to start getting the data bits
             startBit: begin
-                if(clockCount < 1) begin
-                    clockCount <= clockCount + 1;
-                end
-                else begin
-                    clockCount <= 0; // To start receiving Bits
-                    bitIndex <= 7;
-                    state <= processBits;
-                end
+                bitIndex <= 0; // Reset index count for processing
+                o <= 0;
+                state <= processBits;
             end
 
             // Get bit by bit looping through the indexes
             processBits: begin
-                if(bitIndex >= 0) begin
-                    out <= data[bitIndex];
-                    bitIndex <= bitIndex - 1;
+                if(bitIndex < 7) begin
+                    o <= data[bitIndex];
+                    bitIndex <= bitIndex + 1;
                 end
-                else state <= endBit;
+                else begin
+                    o <= data[bitIndex];
+                    state <= endBit;
+                end
             end
 
             // Go back to standby after finishing getting the data bits
             endBit: begin
-                if(clockCount < 1) begin
-                    clockCount <= clockCount + 1;
-                end
-                else begin
-                    clockCount <= 0;
-                    state <= standby;
-                end
+                o <= 1;
+                state <= standby;
+            end
+
+            default: begin
+                state <= standby;
             end
         endcase
     end
