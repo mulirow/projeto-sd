@@ -12,6 +12,7 @@ module tx(clk1, btn, data, out);
 
     always @ (*) begin
         case(state)
+            // Waiting for input state
             standby: begin
                 dataStore <= data;
                 clockCount <= 0;
@@ -19,17 +20,19 @@ module tx(clk1, btn, data, out);
                 if(~btn) state <= startBit;
             end
 
+            //  Start bit to start getting the data bits
             startBit: begin
                 if(clockCount < 1) begin
                     clockCount <= clockCount + 1;
                 end
                 else begin
-                    clockCount <= 0;
+                    clockCount <= 0; // To start receiving Bits
                     bitIndex <= 7;
                     state <= processBits;
                 end
             end
 
+            // Get bit by bit looping through the indexes
             processBits: begin
                 if(bitIndex >= 0) begin
                     out <= data[bitIndex];
@@ -38,6 +41,7 @@ module tx(clk1, btn, data, out);
                 else state <= endBit;
             end
 
+            // Go back to standby after finishing getting the data bits
             endBit: begin
                 if(clockCount < 1) begin
                     clockCount <= clockCount + 1;
