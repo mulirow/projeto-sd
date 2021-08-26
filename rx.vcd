@@ -1,0 +1,267 @@
+$date
+	Wed Aug 25 22:11:28 2021
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module rx_tb $end
+$var wire 8 ! ledData [7:0] $end
+$var wire 5 " display [4:0] $end
+$var reg 1 # clk2 $end
+$var reg 1 $ transmission $end
+$scope module UUT $end
+$var wire 1 # clk2 $end
+$var wire 5 % display [0:4] $end
+$var wire 8 & ledData [0:7] $end
+$var wire 1 $ transmission $end
+$var reg 4 ' bitIndex [0:3] $end
+$var reg 4 ( dataRecorder [0:3] $end
+$var reg 4 ) dataRegistry [0:3] $end
+$var reg 5 * display_placeholder [0:4] $end
+$var reg 4 + instructionRecorder [0:3] $end
+$var reg 8 , led_date_placeholder [0:7] $end
+$var reg 4 - state [0:3] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b101 -
+bx ,
+bx +
+bx *
+bx )
+bx (
+b111 '
+bx &
+bx %
+1$
+1#
+bx "
+bx !
+$end
+#1
+0#
+#2
+1#
+#3
+0#
+#4
+1#
+#5
+0#
+#6
+1#
+#7
+0#
+#8
+1#
+#9
+0#
+#10
+b11 -
+1#
+0$
+#11
+0#
+#12
+b110 '
+bx0 !
+bx0 &
+bx0 ,
+bx0 (
+1#
+#13
+0#
+#14
+b101 '
+bx10 !
+bx10 &
+bx10 ,
+bx10 (
+1#
+1$
+#15
+0#
+#16
+b100 '
+bx010 !
+bx010 &
+bx010 ,
+bx010 (
+1#
+0$
+#17
+0#
+#18
+b11 '
+bx0010 !
+bx0010 &
+bx0010 ,
+b10 (
+b110 -
+1#
+#19
+0#
+#20
+b10 '
+bx00010 !
+bx00010 &
+bx00010 ,
+bx0 +
+1#
+#21
+0#
+#22
+b1 '
+bx100010 !
+bx100010 &
+bx100010 ,
+bx10 +
+1#
+1$
+#23
+0#
+#24
+b0 '
+bx0100010 !
+bx0100010 &
+bx0100010 ,
+bx010 +
+1#
+0$
+#25
+0#
+#26
+b1000 '
+b100010 !
+b100010 &
+b100010 ,
+b10 +
+1#
+#27
+0#
+#28
+b111 '
+b10 -
+1#
+1$
+#29
+0#
+#30
+b101 -
+b10 )
+1#
+#31
+0#
+#32
+1#
+#33
+0#
+#34
+1#
+#35
+0#
+#36
+1#
+#37
+0#
+#38
+b11 -
+1#
+0$
+#39
+0#
+#40
+b110 '
+1#
+#41
+0#
+#42
+b101 '
+b100000 !
+b100000 &
+b100000 ,
+b0 (
+1#
+#43
+0#
+#44
+b100 '
+1#
+#45
+0#
+#46
+b11 '
+b101000 !
+b101000 &
+b101000 ,
+b1000 (
+b110 -
+1#
+1$
+#47
+0#
+#48
+b10 '
+1#
+0$
+#49
+0#
+#50
+b1 '
+b1000 !
+b1000 &
+b1000 ,
+b0 +
+1#
+#51
+0#
+#52
+b0 '
+b1001000 !
+b1001000 &
+b1001000 ,
+b100 +
+1#
+1$
+#53
+0#
+#54
+b1000 '
+1#
+0$
+#55
+0#
+#56
+b111 '
+b100 -
+1#
+1$
+#57
+0#
+#58
+b101 -
+b10 "
+b10 %
+b10 *
+1#
+#59
+0#
+#60
+1#
+#61
+0#
+#62
+1#
+#63
+0#
+#64
+1#
+#65
+0#
+#66
+1#
