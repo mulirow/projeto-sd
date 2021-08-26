@@ -5,17 +5,17 @@ module display (data, disp1, disp0);
 
     reg disp0reg;
     reg disp1reg;
-    reg zero = 7'b0000001;  // "0"
-    reg one = 7'b1001111;  // "1"
-    reg two = 7'b0010010; // "2"
-    reg three = 7'b0000110;  // "3"
-    reg four = 7'b1001100;  // "4"
-    reg five = 7'b0100100; // "5"
-    reg six = 7'b0100000; // "6"
-    reg seven = 7'b0001111; // "7"
-    reg eight= 7'b0000000; // "8"
-    reg nine= 7'b0000100; // "9"
-    reg clr = 7'b1111111; // Clean display
+    parameter zero = 7'b0000001;  // "0"
+    parameter one = 7'b1001111;  // "1"
+    parameter two = 7'b0010010; // "2"
+    parameter three = 7'b0000110;  // "3"
+    parameter four = 7'b1001100;  // "4"
+    parameter five = 7'b0100100; // "5"
+    parameter six = 7'b0100000; // "6"
+    parameter seven = 7'b0001111; // "7"
+    parameter eight= 7'b0000000; // "8"
+    parameter nine= 7'b0000100; // "9"
+    parameter clr = 7'b1111111; // Clean display
 
     always @ (*) begin
         case(data)
