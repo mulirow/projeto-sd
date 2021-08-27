@@ -3,21 +3,23 @@ module display (data, disp1, disp0);
     output [6:0] disp1;
     output [6:0] disp0;
 
-    reg disp0reg;
-    reg disp1reg;
-    parameter zero = 7'b0000001;  // "0"
-    parameter one = 7'b1001111;  // "1"
-    parameter two = 7'b0010010; // "2"
-    parameter three = 7'b0000110;  // "3"
-    parameter four = 7'b1001100;  // "4"
-    parameter five = 7'b0100100; // "5"
-    parameter six = 7'b0100000; // "6"
-    parameter seven = 7'b0001111; // "7"
-    parameter eight= 7'b0000000; // "8"
-    parameter nine= 7'b0000100; // "9"
-    parameter clr = 7'b1111111; // Clean display
+    reg [6:0]disp0reg;
+    reg [6:0]disp1reg;
+    parameter [6:0]zero =  7'b0000001; // "0"
+    parameter [6:0]one =   7'b1001111; // "1"
+    parameter [6:0]two =   7'b0010010; // "2"
+    parameter [6:0]three = 7'b0000110; // "3"
+    parameter [6:0]four =  7'b1001100; // "4"
+    parameter [6:0]five =  7'b0100100; // "5"
+    parameter [6:0]six =   7'b0100000; // "6"
+    parameter [6:0]seven = 7'b0001111; // "7"
+    parameter [6:0]eight = 7'b0000000; // "8"
+    parameter [6:0]nine =  7'b0000100; // "9"
+    parameter [6:0]clr =   7'b1111111; // Clean display
 
     always @ (*) begin
+        $display("Trying to display: %d", data);
+        $display("%d %d %d %d %d\n", data[4], data[3], data[2], data[1], data[0]);
         case(data)
             5'b00000: begin
                 disp1reg <= clr;
@@ -90,6 +92,6 @@ module display (data, disp1, disp0);
         endcase
     end
 
-    assign disp0 = disp0reg;
     assign disp1 = disp1reg;
+    assign disp0 = disp0reg;
 endmodule
