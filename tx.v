@@ -58,5 +58,5 @@ module tx(clk1, btn, data, out);
         endcase
     end
 
-    assign out = o; // Initialize out as 1
+    assign out = o;
 endmodule
