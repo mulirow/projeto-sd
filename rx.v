@@ -1,15 +1,15 @@
 module rx(clk2, transmission, ledData, display);
     input clk2, transmission; // transmission => first 4 are instruction bits, last 4 are the data
-    output [0:7]ledData;
-    output [0:4]display;
+    output [7:0]ledData;
+    output [4:0]display;
     
-    reg [0:7]led_date_placeholder;
-    reg [0:4]display_placeholder;
-    reg [0:3]dataRecorder; // Registrador de Data
-    reg [0:3]dataRegistry;
-    reg [0:3]instructionRecorder; // Registrador de Instruction
-    reg [0:3]bitIndex = 7; // Index do bit para saber quando para de pegar instrução e data
-    reg [0:3]state = 5;
+    reg [7:0]led_date_placeholder;
+    reg [4:0]display_placeholder;
+    reg [3:0]dataRecorder; // Registrador de Data
+    reg [3:0]dataRegistry;
+    reg [3:0]instructionRecorder; // Registrador de Instruction
+    reg [3:0]bitIndex; // Index do bit para saber quando para de pegar instrução e data
+    reg [3:0]state = 5;
     parameter clean = 1, loadData = 3, storeData = 2, showData = 4, startBit = 5, getInstruction = 6;
 
     assign ledData = led_date_placeholder;
@@ -19,54 +19,37 @@ module rx(clk2, transmission, ledData, display);
         case(state)
             startBit: begin
                 if(~transmission) begin
+                    bitIndex <= 0;
                     state <= loadData;
                 end
             end
 
             loadData: begin
-                if(bitIndex < 4) begin // 7 6 5 4
+                if(bitIndex == 3) begin
                     state <= getInstruction;
                 end
-                else begin
-                    if(bitIndex == 4) begin
-                        state <= getInstruction;
-                    end
-                    dataRecorder[bitIndex - 4] <= transmission; // Instruction is after data
-                    led_date_placeholder[bitIndex] <= transmission;
-                    bitIndex <= bitIndex - 1;
-                end
+                dataRecorder[bitIndex] <= transmission; // Instruction is after data
+                led_date_placeholder[bitIndex] <= transmission;
+                bitIndex <= bitIndex + 1;
             end
 
-            getInstruction: begin // 3 2 1 0
+            getInstruction: begin // 4 5 6 7
                 if(bitIndex == 8) begin
-                    if(instructionRecorder == 1) begin
-                        state <= clean;
-                    end
+                    if(instructionRecorder == 1) state <= clean;
                     else begin 
-                        if(instructionRecorder == 4) begin
-                            state <= showData;
-                        end
+                        if(instructionRecorder == 2) state <= storeData;
                         else begin
-                            if(instructionRecorder == 2) begin
-                                state <= storeData;
-                            end
-                            else begin
-                            state <= startBit;
-                            end
+                            if(instructionRecorder == 4) state <= showData;
+                            else state <= startBit;
                         end
                     end
-                    bitIndex <= 7; // resetar para pegar o próximo transmission
+                    bitIndex <= 0; // resetar para pegar o próximo transmission
                 end
                 else begin
-                    instructionRecorder[bitIndex] <= transmission; // Instruction is after data
+                    instructionRecorder[bitIndex-4] <= transmission; // Instruction is after data
                     led_date_placeholder[bitIndex] <= transmission;
                     
-                    if(bitIndex > 0) begin
-                        bitIndex <= bitIndex - 1;
-                    end
-                    else begin 
-                        bitIndex <= 8;
-                    end
+                    bitIndex <= bitIndex + 1;
                 end
             end
 
