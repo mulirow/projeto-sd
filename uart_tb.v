@@ -10,7 +10,7 @@ module uart_tb();
     wire [6:0]disp0;
 
     parameter clockPeriod = 1; // 1 MHz base clock
-    parameter clocksPerBit = 53; //How many pulses are needed so transmission is 9600 baud
+    parameter clocksPerBit = 104; //How many pulses are needed so transmission is 9600 baud
 
     initial begin
         $dumpfile("uart.vcd");
