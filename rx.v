@@ -18,14 +18,12 @@ module rx(clk2, transmission, ledData, display);
     always @(posedge clk2) begin
         case(state)
             startBit: begin
-                $display("START - BITINDEX: %d\n", bitIndex);
                 if(~transmission) begin
                     state <= loadData;
                 end
             end
 
             loadData: begin
-                $display("LOAD - BITINDEX: %d\n", bitIndex);
                 if(bitIndex < 4) begin // 7 6 5 4
                     state <= getInstruction;
                 end
@@ -40,9 +38,7 @@ module rx(clk2, transmission, ledData, display);
             end
 
             getInstruction: begin // 3 2 1 0
-                $display("GET INSSTR - BITINDEX: %d\n", bitIndex);
                 if(bitIndex == 8) begin
-                    $display("instructionRecorder: %d\n", instructionRecorder);
                     if(instructionRecorder == 1) begin
                         state <= clean;
                     end
@@ -75,19 +71,16 @@ module rx(clk2, transmission, ledData, display);
             end
 
             showData: begin
-                $display("SHOW - BITINDEX: %d\n", bitIndex);
                 display_placeholder <= dataRegistry;
                 state <= startBit;
             end
 
             storeData: begin
-                $display("STORE - BITINDEX: %d\n", bitIndex);
                 dataRegistry <= dataRecorder;
                 state <= startBit;
             end
 
             clean: begin
-                $display("CLEAN - BITINDEX: %d\n", bitIndex);
                 display_placeholder <= 16;
                 state <= startBit;
             end
