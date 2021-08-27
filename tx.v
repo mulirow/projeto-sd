@@ -11,8 +11,6 @@ module tx(clk1, btn, data, out);
 
     parameter standby = 0, waitRelease = 1, startBit = 2, processBits = 3, endBit = 4;
 
-    assign out = o; // Initialize out as 1
-
     always @ (posedge clk1) begin
         case(state)
             // Waiting for input state
@@ -59,4 +57,6 @@ module tx(clk1, btn, data, out);
             end
         endcase
     end
+
+    assign out = o; // Initialize out as 1
 endmodule
