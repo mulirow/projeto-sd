@@ -1,7 +1,7 @@
 `timescale 1us/10ns
 
 module uart_tb();
-    reg clk1, clk2, btn;
+    reg clk, btn;
     reg [7:0]data;
     wire [4:0]display;
     wire [7:0]ledData;
@@ -15,8 +15,7 @@ module uart_tb();
     initial begin
         $dumpfile("uart.vcd");
         $dumpvars(0, uart_tb);
-        clk1 = 1;
-        clk2 = 1;
+        clk = 1;
         btn = 1;
         data = 0;
         
@@ -26,18 +25,32 @@ module uart_tb();
 
         #(clockPeriod * clocksPerBit) btn = 1;
 
+        #(clockPeriod * clocksPerBit * 100) data = 44;
+
+        #(clockPeriod * clocksPerBit) btn = 0;
+
+        #(clockPeriod * clocksPerBit) btn = 1;
+
+        #(clockPeriod * clocksPerBit * 100) data = 66;
+
+        #(clockPeriod * clocksPerBit) btn = 0;
+
+        #(clockPeriod * clocksPerBit) btn = 1;
+
+        #(clockPeriod * clocksPerBit * 50) data = 20;
+
+        #(clockPeriod * clocksPerBit) btn = 0;
+
+        #(clockPeriod * clocksPerBit) btn = 1;
+
         #(clockPeriod * clocksPerBit * 100) $finish;
     end
 
     always begin
-        #(clockPeriod * clocksPerBit/2) clk1 = ~clk1;
+        #(clockPeriod * clocksPerBit/2) clk = ~clk;
     end
 
-    always begin
-        #(clockPeriod * clocksPerBit/2) clk2 = ~clk2;
-    end
-
-    tx tx_UUT(clk1, btn, data, transmission);
-    rx rx_UUT(clk2, transmission, ledData, display);
+    tx tx_UUT(clk, btn, data, transmission);
+    rx rx_UUT(clk, transmission, ledData, display);
     display display_UUT(display, disp1, disp0);
 endmodule
